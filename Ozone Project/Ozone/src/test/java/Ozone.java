@@ -6,6 +6,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -16,7 +17,7 @@ public class Ozone {
     WebDriverWait wait;
 
     @BeforeMethod
-    public void setup(){
+    public void setup() {
         driver = new ChromeDriver();
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
@@ -24,23 +25,25 @@ public class Ozone {
     }
 
     @Test
-    public void loginTest(){
-     WebElement cookie = driver.findElement(By.xpath("//*[@id=\"cookie_info_agree\"]/a"));
-     cookie.click();
+    public void loginTest() throws InterruptedException {
+        WebElement cookie = driver.findElement(By.xpath("//*[@id=\"cookie_info_agree\"]/a"));
+        cookie.click();
         Actions builder = new Actions(driver);
         WebElement category = driver.findElement(By.cssSelector(".open-main-cat-nav-wrapper>a"));
-//        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".open-main-cat-nav-wrapper>a")));
-        WebElement books = driver.findElement(By.xpath("/html/body/header/div[2]/div/div/div/nav/div/div[1]/div/ul/li[2]/a/span/h3"));
-        builder.moveToElement(category);
+        builder.moveToElement(category)
+                .perform();
+
+        WebElement books = driver.findElement(By.linkText("Книжарница"));
+        builder.moveToElement(books).perform();
+
+        WebElement calendars = driver.findElement(By.linkText("Календари"));
+        builder.moveToElement(calendars).perform();
+        Thread.sleep(2500);
+        calendars.click();
+
+        WebElement maxHandle = driver.findElement(By.cssSelector(".handle.max"));
+        builder.scrollToElement(maxHandle).perform();
 
 
-       builder.moveToElement(books)
-               .perform();
-//        WebElement fantasy = driver.findElement(By.xpath("/html/body/header/div[2]/div/div/div/nav/div/div[1]/div/ul/li[2]/div/ul[1]/li[2]/a"));
-//        fantasy.click();
-
-        // builder.moveToElement(books)
-//         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("/html/body/header/div[2]/div/div/div/nav/div/div[1]/div/ul/li[2]/a/span/h3")));
-//        fantasy.click();
     }
 }
