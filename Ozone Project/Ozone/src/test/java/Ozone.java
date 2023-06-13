@@ -11,6 +11,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.time.Duration;
+import java.util.List;
 
 public class Ozone {
     WebDriver driver;
@@ -38,12 +39,26 @@ public class Ozone {
 
         WebElement calendars = driver.findElement(By.linkText("Календари"));
         builder.moveToElement(calendars).perform();
-        Thread.sleep(2500);
+        Thread.sleep(500);
         calendars.click();
 
         WebElement maxHandle = driver.findElement(By.cssSelector(".handle.max"));
-        builder.scrollToElement(maxHandle).perform();
+        builder.scrollToElement(maxHandle)
+                .clickAndHold(maxHandle)
+                .moveByOffset(-40, 0)
+                .release()
+                .perform();
 
 
+//        WebElement precision = driver.findElement(By.cssSelector(".precision"));
+//        WebElement price = driver.findElement(By.cssSelector(".price"));
+//        System.out.println(element.getCssValue(String.valueOf(price)));
+
+
+
+        List<WebElement> discountedProducts = driver.findElements(By.cssSelector(".col-xs-3"));
+        for (WebElement element: discountedProducts ) {
+            System.out.println(element.getText());
+        }
     }
 }
