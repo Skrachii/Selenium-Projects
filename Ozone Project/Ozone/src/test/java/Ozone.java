@@ -51,14 +51,16 @@ public class Ozone {
 
 
 //        WebElement precision = driver.findElement(By.cssSelector(".precision"));
-//        WebElement price = driver.findElement(By.cssSelector(".price"));
+        WebElement specialPrice = driver.findElement(By.cssSelector(".special-price"));
 //        System.out.println(element.getCssValue(String.valueOf(price)));
 
+        List<WebElement> discountedProducts = driver.findElements(By.cssSelector(".special-price"));
 
-
-        List<WebElement> discountedProducts = driver.findElements(By.cssSelector(".col-xs-3"));
-        for (WebElement element: discountedProducts ) {
-            System.out.println(element.getText());
+        if (specialPrice.isDisplayed()) {
+            for (WebElement element : discountedProducts) {
+                System.out.println(element.getText());
+            }
         }
+        System.out.println(discountedProducts.size());
     }
 }
