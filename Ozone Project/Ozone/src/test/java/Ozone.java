@@ -27,7 +27,7 @@ public class Ozone {
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
         driver.get("https://www.ozone.bg/");
 
-        wait = new WebDriverWait(driver, Duration.ofSeconds(6));
+        wait = new WebDriverWait(driver, Duration.ofSeconds(3));
     }
 
     @Test
@@ -56,20 +56,20 @@ public class Ozone {
 
         WebElement provider = driver.findElement(By.cssSelector("#filter-link-nalichnost-na-sklad"));
         provider.click();
-        WebElement mistery = driver.findElement(By.cssSelector("#filter-link-zhanrove-misterii"));
-        builder.scrollToElement(mistery)
+        WebElement scienceFiction = driver.findElement(By.cssSelector("#filter-link-zhanrove-nauchna-fantastika"));
+        builder.scrollToElement(scienceFiction)
                 .perform();
-        mistery.click();
+        scienceFiction.click();
         WebElement showElements = driver.findElement(By.xpath("//*[@id=\"products-list\"]/div[1]/div/div[3]/div"));
         builder.moveToElement(showElements)
                 .perform();
-        WebElement forty = driver.findElement(By.xpath("//*[@id=\"products-list\"]/div[1]/div/div[3]/ul/li[1]/span"));
-        forty.click();
+        WebElement hundred = driver.findElement(By.xpath("//*[@id=\"products-list\"]/div[1]/div/div[3]/ul/li[3]/span"));
+        hundred.click();
 
         WebElement maxHandle = driver.findElement(By.cssSelector(".handle.max"));
         builder.scrollToElement(maxHandle)
                 .clickAndHold(maxHandle)
-                .moveByOffset(-10, 0)
+                .moveByOffset(-80, 0)
                 .release()
                 .perform();
 
@@ -80,81 +80,16 @@ public class Ozone {
 
         while (hasNextPage) {
             WebElement nextPageButton = driver.findElement(By.cssSelector(".next"));
-            discountedPrice = driver.findElement(By.cssSelector(".special-price"));
-            if (!discountedPrice.isDisplayed() && nextPageButton.getAttribute("class").contains("disable")) {
-                break;
-//                nextPageButton.click();
-//                discountedProducts.add(discountedPrice);
-            }else{
-                discountedProducts.add(discountedPrice);
-            }
-
-//                try{
-//            wait.until(ExpectedConditions.refreshed(ExpectedConditions.stalenessOf(discountedPrice)));
-//                    break;
-//                }catch (StaleElementReferenceException e){
-//                    attempts++;
-//                }
-
-
-//            discountedPrice = driver.findElement(By.cssSelector(".special-price"));
-//            if (discountedPrice.isDisplayed()) {
-//                discountedProducts.add(discountedPrice);
-//            }
-
-//            while (attempts < maxAttempts){
-////                driver.navigate().refresh();
-
 
             if (nextPageButton.getAttribute("class").contains("disable")) {
                 hasNextPage = false;
             } else {
+                discountedProducts.add(discountedPrice);
                 nextPageButton.click();
             }
-//            discountedPrice = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".special-price")));
+            System.out.println("All discounted products: " + discountedProducts.size());
         }
-        System.out.println("All discounted products: " + discountedProducts.size());
-
-
-//        try {
-//            WebElement nextPageButton = driver.findElement(By.cssSelector(".next"));
-//
-//            while (hasNextPage) {
-////                if (discountedPrice.isDisplayed()) {
-////                    discountedProducts.add(discountedPrice);
-//                     wait.until(ExpectedConditions.(nextPageButton));
-//                    nextPageButton.click();
-////            } else {
-////                nextPageButton.click();
-//                }
-//
-//        } catch (StaleElementReferenceException e) {
-//            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(0));
-//            wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".next")));
-//            WebElement nextPageButton = driver.findElement(By.cssSelector(".next"));
-//            while (hasNextPage) {
-//                nextPageButton.click();
-//            }
-//            if (nextPageButton.isEnabled()) {
-//                nextPageButton.click();
-//            }
-        //else {
-        //  hasNextPage = false;
-
-        //System.out.println(discountedProducts.size());
     }
-////        WebElement precision = driver.findElement(By.cssSelector(".precision"));
-//        WebElement specialPrice = driver.findElement(By.cssSelector(".special-price"));
-////        System.out.println(element.getCssValue(String.valueOf(price)));
-//
-//
-
-
-//        WebElement discountedElement = discountedProducts.get(0);
-//        WebElement toCart = driver.findElement(By.cssSelector(".add-to-cart"));
-//    public void nextPage(){
-//        nextPageButton.click();
-//    }
 }
 
 
