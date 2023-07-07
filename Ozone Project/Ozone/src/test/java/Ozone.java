@@ -81,10 +81,16 @@ public class Ozone {
         while (hasNextPage) {
             WebElement nextPageButton = driver.findElement(By.cssSelector(".next"));
 
+            //newly added. Locating the discounted prices on the current page
+            List<WebElement> discountedPrices = driver.findElements(By.cssSelector(".special-price"));
+            //add the discounted prices to the list
+            discountedProducts.addAll(discountedPrices);
+
+
             if (nextPageButton.getAttribute("class").contains("disable")) {
                 hasNextPage = false;
             } else {
-                discountedProducts.add(discountedPrice);
+            //    discountedProducts.add(discountedPrice);
                 nextPageButton.click();
             }
             System.out.println("All discounted products: " + discountedProducts.size());
